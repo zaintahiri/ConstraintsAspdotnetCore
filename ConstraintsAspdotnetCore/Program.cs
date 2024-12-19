@@ -1,4 +1,10 @@
+using ConstraintsAspdotnetCore.Customconstraints;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRouting(options => {
+    options.ConstraintMap.Add("alphanumeric", typeof(AlphaNumericConstraint));
+});
+
 var app = builder.Build();
 
 app.UseRouting();
@@ -74,6 +80,16 @@ app.UseEndpoints(endpoints => {
         // we will use RoutValues, not Query.
         string? month = Convert.ToString(context.Request.RouteValues["month"]);
         await context.Response.WriteAsync($"Monthly report is {month}");
+    });
+
+    // here how to use your custom routing
+
+    
+    endpoints.MapGet("/Services/{serivce:alphanumeric}", async (context) =>
+    {
+        // we will use RoutValues, not Query.
+        string? serivce = Convert.ToString(context.Request.RouteValues["serivce"]);
+        await context.Response.WriteAsync($"Service is {serivce}");
     });
 
 });
