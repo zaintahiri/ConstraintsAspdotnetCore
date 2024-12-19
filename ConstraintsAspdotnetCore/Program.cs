@@ -1,12 +1,22 @@
 using ConstraintsAspdotnetCore.Customconstraints;
+using Microsoft.Extensions.FileProviders;
 
-var builder = WebApplication.CreateBuilder(args);
+//var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions() { 
+    WebRootPath="myrootfiles"
+});;
 builder.Services.AddRouting(options => {
     options.ConstraintMap.Add("alphanumeric", typeof(AlphaNumericConstraint));
 });
 
 var app = builder.Build();
-
+app.UseStaticFiles();
+// how to add folder as root folder. you can use many folders as root folder
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath + "secondrootfolder"))
+}) ;
 app.UseRouting();
 app.UseEndpoints(endpoints => {
     // here you are applying int constraint on id parameter

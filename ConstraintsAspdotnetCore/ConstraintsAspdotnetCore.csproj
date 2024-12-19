@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="myrootfiles\zainulabdincv_updatedhb.pdf" />
+    <Content Include="secondrootfolder\format5.PNG" />
+  </ItemGroup>
+
 </Project>
